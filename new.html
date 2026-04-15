@@ -1,0 +1,239 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Love Letter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  height:100vh;
+  overflow:hidden;
+  font-family:'Cormorant Garamond', serif;
+  background: radial-gradient(circle at top, #ffe7dd, #fff5f0 60%, #f7e6df);
+  color:#4a2f25;
+}
+
+/* OPENING */
+.center {
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+}
+
+#openingText {
+  font-family:'Playfair Display', serif;
+  font-size:22px;
+}
+
+#tap {
+  margin-top:25px;
+  font-size:13px;
+  letter-spacing:2px;
+  cursor:pointer;
+  opacity:0.7;
+}
+
+#tap:hover { opacity:1; }
+
+/* ENVELOPE */
+#envelope {
+  display:none;
+}
+
+.card {
+  width:260px;
+  height:180px;
+  background:linear-gradient(145deg,#f5e6dd,#ecd3c3);
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.15);
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+}
+
+/* LETTER SCREEN */
+#letterScreen {
+  display:none;
+  height:100vh;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* 💌 FIXED LETTER BOX */
+.letter {
+  width:95%;
+  max-width:650px;
+  height:85vh;
+  background:rgba(255,250,245,0.96);
+  backdrop-filter:blur(10px);
+  border-radius:14px;
+  padding:40px;
+  overflow-y:auto;
+
+  box-shadow:0 25px 80px rgba(0,0,0,0.15);
+
+  font-size:18px;
+  line-height:1.9;
+}
+
+/* paragraph spacing */
+.letter p {
+  margin-bottom:18px;
+}
+
+/* scrollbar */
+.letter::-webkit-scrollbar {
+  width:5px;
+}
+.letter::-webkit-scrollbar-thumb {
+  background:#c9a08f;
+  border-radius:10px;
+}
+
+/* HEARTS */
+.heart {
+  position:fixed;
+  font-size:18px;
+  animation:float 3s ease forwards;
+}
+
+@keyframes float {
+  0% { transform:translateY(0); opacity:1; }
+  100% { transform:translateY(-200px); opacity:0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+<div class="center" id="opening">
+  <div id="openingText">💌 adoniyee yeheyaw lene leyet yelal eshi ☺️</div>
+  <div id="tap">tap to continue</div>
+</div>
+
+<!-- ENVELOPE -->
+<div class="center" id="envelope">
+  <div class="card" id="openBtn">💌</div>
+</div>
+
+<!-- LETTER -->
+<div id="letterScreen" class="center">
+  <div class="letter" id="letterBox"></div>
+</div>
+
+<script>
+const letter = `My favorite memory with you isn’t just one moment.
+
+It’s the everyday moments I get to share with you.
+
+But if I had to choose, it would be the way you laugh —
+the kind that doesn’t stop,
+the kind that makes everything feel lighter.
+
+I remember how I shared even the smallest details with you,
+and somehow…
+you still enjoyed them.
+
+Like they mattered.
+Like I mattered.
+
+I remember how you respected me,
+even in the simplest things I said.
+
+And at the same time,
+I remember myself…
+
+thinking too much.
+
+Wondering:
+"does she like me?"
+"am I the right person for her?"
+"did I do everything right?"
+"what if she doesn’t like this?"
+
+That constant care I had for you…
+from every angle.
+
+That quiet pressure of wanting you to have the best,
+of wanting to be enough for you.
+
+And somehow…
+
+those thoughts,
+that stress,
+that care —
+
+they became my most valuable memories.
+
+Not because there aren’t better ones…
+
+but because they came from loving you.
+
+From wanting to care for you.
+
+From choosing you,
+in every small moment.
+
+And I haven’t forgotten…
+
+the times you sent me pictures and videos.
+
+How something so simple
+could change everything inside me.
+
+Like warmth spreading through me —
+like summer in my heart,
+even when everything outside felt like rain.`;
+
+/* NAVIGATION */
+document.getElementById("tap").onclick = () => {
+  document.getElementById("opening").style.display = "none";
+  document.getElementById("envelope").style.display = "flex";
+};
+
+document.getElementById("openBtn").onclick = () => {
+  document.getElementById("envelope").style.display = "none";
+  document.getElementById("letterScreen").style.display = "flex";
+
+  document.getElementById("letterBox").innerHTML = formatLetter(letter);
+
+  spawnHearts();
+};
+
+/* FORMAT LETTER (FIX LADDER TEXT) */
+function formatLetter(text) {
+  return text
+    .split("\n\n")
+    .map(p => `<p>${p.replace(/\n/g, " ")}</p>`)
+    .join("");
+}
+
+/* HEART EFFECT */
+function spawnHearts(){
+  for(let i=0;i<18;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="❤️";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.top=window.innerHeight+"px";
+    document.body.appendChild(h);
+
+    setTimeout(()=>h.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
